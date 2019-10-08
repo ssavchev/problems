@@ -20,7 +20,7 @@ public class KnightsTour {
     // #   | 
     //
 
-    static final int boardSize = 7;
+    static final int boardSize = 8;
     static final int maxLevel = boardSize * boardSize;
 
     static final int[] mPathX = new int[maxLevel];
@@ -87,8 +87,8 @@ public class KnightsTour {
     }
 
     static class Chromosome {
-        final int startX = 0;
-        final int startY = 0;
+        final int startX = 4;
+        final int startY = 4;
         
         final int[] path = new int[maxLevel];
 
@@ -372,12 +372,12 @@ public class KnightsTour {
 
         generatePopulation();
 
-        for (int i = 0; i < 500; i++) {
+        for (int i = 0; i < 100; i++) {
             generationNew();
         }
 
-        int x = 0;
-        int y = 0;
+        int x;
+        int y;
 
         for (y = 0; y < boardSize; y++) {
             for (x = 0; x < boardSize; x++) {
@@ -385,8 +385,8 @@ public class KnightsTour {
             }
         }
 
-        x = 0;
-        y = 0;
+        x = 4;
+        y = 4;
         mBoard[x][y] = 1;
 
         for (int l = 0; l < mPopulation[0].fitness; l++) {
