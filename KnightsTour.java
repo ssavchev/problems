@@ -182,7 +182,7 @@ public class KnightsTour {
                     || y >= boardSize
                     || x < 0
                     || y < 0
-                    || mBoard[x][y] != 0) {
+                    || board[x][y] != 0) {
                     return l;
                 }
 
@@ -240,7 +240,7 @@ public class KnightsTour {
     public static void generationNew() {
         PriorityQueue<Chromosome> queue = new PriorityQueue<>(new ChromosomeComparator());
 
-        for (int i = 0; i < 3 * mPopulation.length; i++) {
+        for (int i = 0; i < 5 * mPopulation.length; i++) {
             int classA = mRand.nextInt(100);
             int classB = mRand.nextInt(100);
     
@@ -292,14 +292,95 @@ public class KnightsTour {
         System.out.println("");
     }
 
+    static void printBoard() {
+        for (int y = 0; y < boardSize; y++) {
+            for (int x = 0; x < boardSize; x++) {
+                if (mBoard[x][y] != 0) {
+                    System.out.printf("# ");
+                } else {
+                    System.out.printf(". ");
+                }
+            }
+            System.out.println("");
+        }
+    }
+
     public static void main(String[] args) {
         System.out.println("Start KnightsTour.java");
         System.out.println("");
 
         generatePopulation();
 
-        for (int i = 0; i < 25; i++) {
+        for (int i = 0; i < 5000; i++) {
             generationNew();
+        }
+
+        int x = 0;
+        int y = 0;
+
+        for (y = 0; y < boardSize; y++) {
+            for (x = 0; x < boardSize; x++) {
+                mBoard[x][y] = 0;
+            }
+        }
+
+        x = 0;
+        y = 0;
+        mBoard[x][y] = 1;
+
+        for (int l = 0; l < mPopulation[0].fitness; l++) {
+            switch (mPopulation[0].path[l]) {
+                case 1: {
+                    x = x + 2;
+                    y = y + 1;
+                    break;
+                }
+                case 2: {
+                    x = x + 2;
+                    y = y - 1;
+                    break;
+                }
+                case 3: {
+                    x = x - 2;
+                    y = y + 1;
+                    break;
+                }
+                case 4: {
+                    x = x - 2;
+                    y = y - 1;
+                    break;
+                }
+                case 5: {
+                    x = x + 1;
+                    y = y + 2;
+                    break;
+                }
+                case 6: {
+                    x = x + 1;
+                    y = y - 2;
+                    break;
+                }
+                case 7: {
+                    x = x - 1;
+                    y = y + 2;
+                    break;
+                }
+                case 8: {
+                    x = x - 1;
+                    y = y - 2;
+                    break;
+                }
+                default: {
+                    break;
+                }
+            }
+
+            mBoard[x][y] = 1;
+    
+            System.out.printf("Move %d", l);
+            System.out.println("");
+            
+            printBoard();
         }
 
         /*
