@@ -116,7 +116,7 @@ public class KnightsTour {
 
             for (int l = 0; l < maxLevel; l++) {
                 int mutation = mRand.nextInt(1000);
-                if (mutation < 5) {
+                if (mutation < 6) {
                     path[l] = 1 + mRand.nextInt(8);
                 }
             }
@@ -132,6 +132,9 @@ public class KnightsTour {
             board[x][y] = 1;
 
             for (int l = 0; l < maxLevel; l++) {
+                int xo = x;
+                int yo = y;
+
                 switch (path[l]) {
                     case 1: {
                         x = x + 2;
@@ -183,7 +186,65 @@ public class KnightsTour {
                     || x < 0
                     || y < 0
                     || board[x][y] != 0) {
-                    return l;
+                    // check moves
+                    if ((xo + 2) < boardSize && (yo + 1) < boardSize && board[xo + 2][yo + 1] == 0) {
+                        path[l] = 1;
+                        l--;
+                        x = xo;
+                        y = yo;
+                        continue;
+                    }
+                    if ((xo + 2) < boardSize && (yo - 1) >= 0 && board[xo + 2][yo - 1] == 0) {
+                        path[l] = 2;
+                        l--;
+                        x = xo;
+                        y = yo;
+                        continue;
+                    }
+                    if ((xo - 2) >= 0 && (yo + 1) < boardSize && board[xo - 2][yo + 1] == 0) {
+                        path[l] = 3;
+                        l--;
+                        x = xo;
+                        y = yo;
+                        continue;
+                    }
+                    if ((xo - 2) >= 0 && (yo - 1) >= 0 && board[xo - 2][yo - 1] == 0) {
+                        path[l] = 4;
+                        l--;
+                        x = xo;
+                        y = yo;
+                        continue;
+                    }if ((xo + 1) < boardSize && (yo + 2) < boardSize && board[xo + 1][yo + 2] == 0) {
+                        path[l] = 5;
+                        l--;
+                        x = xo;
+                        y = yo;
+                        continue;
+                    }
+                    if ((xo + 1) < boardSize && (yo - 2) >= 0 && board[xo + 1][yo - 2] == 0) {
+                        path[l] = 6;
+                        l--;
+                        x = xo;
+                        y = yo;
+                        continue;
+                    }
+                    if ((xo - 1) >= 0 && (yo + 2) < boardSize && board[xo - 1][yo + 2] == 0) {
+                        path[l] = 7;
+                        l--;
+                        x = xo;
+                        y = yo;
+                        continue;
+                    }
+                    if ((xo - 1) >= 0 && (yo - 2) >= 0 && board[xo - 1][yo - 2] == 0) {
+                        path[l] = 8;
+                        l--;
+                        x = xo;
+                        y = yo;
+                        continue;
+                    }
+
+                    // no moves possible
+                    return (l - 1);
                 }
 
                 board[x][y] = 1;
@@ -311,7 +372,7 @@ public class KnightsTour {
 
         generatePopulation();
 
-        for (int i = 0; i < 5000; i++) {
+        for (int i = 0; i < 500; i++) {
             generationNew();
         }
 
