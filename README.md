@@ -1,3 +1,3 @@
 # problems
 
-Currently only Knoght's problem with genetic algorithm
+Currently only Knight's problem with genetic algorithm
