@@ -23,12 +23,12 @@ public class KnightsTour {
     static final int boardSize = 8;
     static final int maxLevel = boardSize * boardSize;
 
-    static final int[] mPathX = new int[maxLevel];
-    static final int[] mPathY = new int[maxLevel];
+    //static final int[] mPathX = new int[maxLevel];
+    //static final int[] mPathY = new int[maxLevel];
 
     static final int[][] mBoard = new int[boardSize][boardSize];
 
-    static boolean findTour(int x, int y, int level) {
+    /*static boolean findTour(int x, int y, int level) {
         if (x >= boardSize
             || y >= boardSize
             || x < 0
@@ -84,11 +84,11 @@ public class KnightsTour {
         mBoard[x][y] = 0;
 
         return false;
-    }
+    }*/
 
     static class Chromosome {
-        final int startX = 4;
-        final int startY = 4;
+        public static final int startX = 4;
+        public static final int startY = 4;
         
         final int[] path = new int[maxLevel];
 
@@ -187,56 +187,36 @@ public class KnightsTour {
                     || y < 0
                     || board[x][y] != 0) {
                     // check moves
+
+                    ArrayList<Integer> moves = new ArrayList<>();
+
                     if ((xo + 2) < boardSize && (yo + 1) < boardSize && board[xo + 2][yo + 1] == 0) {
-                        path[l] = 1;
-                        l--;
-                        x = xo;
-                        y = yo;
-                        continue;
+                        moves.add(1);
                     }
                     if ((xo + 2) < boardSize && (yo - 1) >= 0 && board[xo + 2][yo - 1] == 0) {
-                        path[l] = 2;
-                        l--;
-                        x = xo;
-                        y = yo;
-                        continue;
+                        moves.add(2);
                     }
                     if ((xo - 2) >= 0 && (yo + 1) < boardSize && board[xo - 2][yo + 1] == 0) {
-                        path[l] = 3;
-                        l--;
-                        x = xo;
-                        y = yo;
-                        continue;
+                        moves.add(3);
                     }
                     if ((xo - 2) >= 0 && (yo - 1) >= 0 && board[xo - 2][yo - 1] == 0) {
-                        path[l] = 4;
-                        l--;
-                        x = xo;
-                        y = yo;
-                        continue;
+                        moves.add(4);
                     }if ((xo + 1) < boardSize && (yo + 2) < boardSize && board[xo + 1][yo + 2] == 0) {
-                        path[l] = 5;
-                        l--;
-                        x = xo;
-                        y = yo;
-                        continue;
+                        moves.add(5);
                     }
                     if ((xo + 1) < boardSize && (yo - 2) >= 0 && board[xo + 1][yo - 2] == 0) {
-                        path[l] = 6;
-                        l--;
-                        x = xo;
-                        y = yo;
-                        continue;
+                        moves.add(6);
                     }
                     if ((xo - 1) >= 0 && (yo + 2) < boardSize && board[xo - 1][yo + 2] == 0) {
-                        path[l] = 7;
-                        l--;
-                        x = xo;
-                        y = yo;
-                        continue;
+                        moves.add(7);
                     }
                     if ((xo - 1) >= 0 && (yo - 2) >= 0 && board[xo - 1][yo - 2] == 0) {
-                        path[l] = 8;
+                        moves.add(8);
+                    }
+
+                    int size = moves.size();
+                    if (size > 0) {
+                        path[l] = moves.get(size == 1 ? 0 : mRand.nextInt(size));
                         l--;
                         x = xo;
                         y = yo;
@@ -268,7 +248,7 @@ public class KnightsTour {
     static final Random mRand = new Random();
 
     static final int mClasses = 5;
-    static final int mClassSize = 10;
+    static final int mClassSize = 20;
     static final Chromosome[] mPopulation = new Chromosome[mClasses * mClassSize];
 
     public static void generatePopulation() {
@@ -385,11 +365,11 @@ public class KnightsTour {
             }
         }
 
-        x = 4;
-        y = 4;
+        x = Chromosome.startX;
+        y = Chromosome.startY;
         mBoard[x][y] = 1;
 
-        for (int l = 0; l < mPopulation[0].fitness; l++) {
+        for (int l = 0; l <= mPopulation[0].fitness; l++) {
             switch (mPopulation[0].path[l]) {
                 case 1: {
                     x = x + 2;
